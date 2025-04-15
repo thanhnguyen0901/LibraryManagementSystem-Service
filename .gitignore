@@ -1,0 +1,19 @@
+# Node.js
+node_modules/
+.env
+package-lock.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# VS Code
+.vscode/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Sequelize auto-generated (nếu có)
+models/*.js.map
