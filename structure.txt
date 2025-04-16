@@ -1,0 +1,40 @@
+LibraryManagementSystem-Service/
+├── config/
+│   └── database.js
+├── controllers/
+│   ├── auth.controller.js
+│   ├── book.controller.js
+│   ├── reader.controller.js
+│   ├── loan.controller.js
+│   └── staff.controller.js
+├── models/
+│   ├── index.js
+│   ├── account.model.js        // TaiKhoan
+│   ├── reader.model.js         // DocGia
+│   ├── librarian.model.js      // ThuThu
+│   ├── book.model.js           // Sach
+│   ├── loan.model.js           // PhieuMuon
+│   ├── loanDetail.model.js     // ChiTietPM
+│   └── config.model.js         // ThamSo
+├── routes/
+│   ├── auth.routes.js
+│   ├── book.routes.js
+│   ├── reader.routes.js
+│   ├── loan.routes.js
+│   └── staff.routes.js
+├── services/
+│   ├── auth.service.js
+│   ├── book.service.js
+│   ├── reader.service.js
+│   ├── loan.service.js
+│   └── staff.service.js
+├── utils/
+│   └── validators.js
+├── middleware/
+│   ├── auth.middleware.js
+│   └── error.middleware.js
+├── app.js
+├── .env
+├── .gitignore
+├── package.json
+└── README.md
