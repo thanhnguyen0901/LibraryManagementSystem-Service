@@ -1,11 +1,12 @@
 // services/loanDetail.service.js
 const db = require('../database');
-const LoanDetail = db.getTable('LoanDetail');
 
-const getAll = () => LoanDetail.findAll();
+const getAll = async () => {
+  return await db.getTable('LoanDetail').findAll();
+};
 
-const getByBookId = (bookId) => {
-  return LoanDetail.findAll({
+const getByBookId = async (bookId) => {
+  return await db.getTable('LoanDetail').findAll({
     where: { MaSach: bookId }
   });
 };

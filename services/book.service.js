@@ -1,28 +1,26 @@
 // services/book.service.js
-const { Op } = require("sequelize");
 const db = require("../database");
-const Book = db.getTable("Book");
 
 const getAllBooks = async () => {
-  return Book.findAll();
+  return await db.getTable("Book").findAll();
 };
 
 const getBookById = async (id) => {
-  return Book.findByPk(id);
+  return await db.getTable("Book").findByPk(id);
 };
 
 const createBook = async (bookData) => {
-  return Book.create(bookData);
+  return await db.getTable("Book").create(bookData);
 };
 
 const updateBook = async (id, bookData) => {
-  const book = await Book.findByPk(id);
+  const book = await Bdb.getTable("Book").findByPk(id);
   if (!book) throw new Error("Book not found");
   return book.update(bookData);
 };
 
 const deleteBook = async (id) => {
-  const book = await Book.findByPk(id);
+  const book = await db.getTable("Book").findByPk(id);
   if (!book) throw new Error("Book not found");
   return book.destroy();
 };

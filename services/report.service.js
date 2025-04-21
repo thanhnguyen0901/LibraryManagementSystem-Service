@@ -1,39 +1,36 @@
 // services/report.service.js
 const db = require('../database');
-const sequelize = db.getInstance();
-const Loan = db.getTable('Loan');
-const Book = db.getTable('Book');
-const Reader = db.getTable('Reader');
+const { Op } = require('sequelize');
 
 const getMonthlySummary = async () => {
-  return Loan.findAll({
+  return await db.getTable('Loan').findAll({
     attributes: [
-      [sequelize.fn('MONTH', sequelize.col('NgayMuon')), 'Thang'],
-      [sequelize.fn('COUNT', sequelize.col('MaPhieu')), 'TongSoPhieu']
+      [db.getInstance().fn('MONTH', db.getInstance().col('NgayMuon')), 'Thang'],
+      [db.getInstance().fn('COUNT', db.getInstance().col('MaPhieu')), 'TongSoPhieu']
     ],
-    group: [sequelize.fn('MONTH', sequelize.col('NgayMuon'))]
+    group: [db.getInstance().fn('MONTH', db.getInstance().col('NgayMuon'))]
   });
 };
 
 const getOverdueBooks = async () => {
-  return Loan.findAll({
+  return await db.getTable('Loan').findAll({
     where: {
       NgayTra: {
-        [sequelize.Op.gt]: sequelize.col('NgayMuon')
+        [Op.gt]: db.getInstance().col('NgayMuon')
       }
     },
-    include: [Book]
+    include: [db.getTable('Book')]
   });
 };
 
 const getDebtReaders = async () => {
-  return Loan.findAll({
+  return await db.getTable('Loan').findAll({
     where: {
       NgayTra: {
-        [sequelize.Op.gt]: sequelize.col('NgayMuon')
+        [Op.gt]: db.getInstance().col('NgayMuon')
       }
     },
-    include: [Reader]
+    include: [db.getTable('Reader')]
   });
 };
 

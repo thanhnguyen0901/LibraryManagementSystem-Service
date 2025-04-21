@@ -78,9 +78,10 @@ const setupAssociations = () => {
 };
 
 const getInstance = () => sequelize;
+
 const getTable = (name) => tables[name];
 
-connectDB();
+// connectDB();
 
 module.exports = {
   connectDB,

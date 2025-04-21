@@ -1,23 +1,28 @@
 // services/loan.service.js
 const db = require('../database');
-const Loan = db.getTable('Loan');
 
-const getAll = () => Loan.findAll();
+const getAll = async () => {
+  return await db.getTable('Loan').findAll();
+};
 
-const getById = (id) => Loan.findByPk(id);
+const getById = async (id) => {
+  return await db.getTable('Loan').findByPk(id);
+};
 
-const create = (data) => Loan.create(data);
+const create = async (data) => {
+  return await db.getTable('Loan').create(data);
+};
 
 const update = async (id, data) => {
-  const loan = await Loan.findByPk(id);
+  const loan = await db.getTable('Loan').findByPk(id);
   if (!loan) throw new Error('Loan not found');
-  return loan.update(data);
+  return await loan.update(data);
 };
 
 const remove = async (id) => {
-  const loan = await Loan.findByPk(id);
+  const loan = await db.getTable('Loan').findByPk(id);
   if (!loan) throw new Error('Loan not found');
-  return loan.destroy();
+  return await loan.destroy();
 };
 
 module.exports = {
