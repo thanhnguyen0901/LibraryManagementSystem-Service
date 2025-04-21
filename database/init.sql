@@ -58,6 +58,7 @@ CREATE TABLE PhieuMuon (
     NgayMuon DATE,
     NgayTra DATE,
     SLMuon INT,
+    TienPhatDaThu DECIMAL(10, 2) DEFAULT 0 AFTER SLMuon,
     FOREIGN KEY (MaDG) REFERENCES DocGia(MaDG),
     FOREIGN KEY (MaSach) REFERENCES Sach(MaSach)
 );
@@ -111,6 +112,7 @@ INSERT INTO PhieuMuon (MaDG, MaSach, NgayMuon, NgayTra, SLMuon) VALUES
 -- Chi tiết phiếu mượn
 INSERT INTO ChiTietPM (MaSach, NgayThang, SoLanMuon) VALUES
 (1, '2024-04-01', 3),
+
 (2, '2024-03-10', 1);
 
 -- Tham số hệ thống

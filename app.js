@@ -1,19 +1,15 @@
-// app.js
+require('dotenv').config();
 const express = require('express');
-const dotenv = require('dotenv');
-const db = require('./models');
-
-// Load environment variables
-dotenv.config();
-
+const cors = require('cors');
+const config = require('./configs/config');
+const db = require('./database');
 const app = express();
 
-// Middleware
+app.use(cors());
 app.use(express.json());
 
-// Sample route (test only)
 app.get('/', (req, res) => {
-  res.send('Library Management System API is running.');
+  res.send('Library Management System API is running...');
 });
 
 const bookRoutes = require('./routes/book.routes');
@@ -43,17 +39,14 @@ app.use('/api/reports', reportRoutes);
 // Connect and sync database
 (async () => {
   try {
-    await db.sequelize.authenticate();
-    console.log(' Database connected successfully.');
-
-    await db.sequelize.sync();
-    console.log(' Models synchronized.');
-
-    const PORT = process.env.PORT || 3001;
-    app.listen(PORT, () => {
-      console.log(` Server is running on port ${PORT}`);
+    console.log(`Connecting to database ${config.database.name}...`);
+    
+    await db.connectDB();
+    const port = process.env.PORT || 3001;
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
     });
   } catch (error) {
-    console.error(' Unable to connect to the database:', error);
+    console.error('Unable to start server:', error);
   }
 })();

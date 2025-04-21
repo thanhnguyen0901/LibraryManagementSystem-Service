@@ -1,21 +1,29 @@
 // services/reader.service.js
-const db = require('../models');
-const Reader = db.Reader;
+const db = require('../database');
+const Reader = db.getTable('Reader');
 
-exports.getAll = () => Reader.findAll();
+const getAll = () => Reader.findAll();
 
-exports.getById = (id) => Reader.findByPk(id);
+const getById = (id) => Reader.findByPk(id);
 
-exports.create = (data) => Reader.create(data);
+const create = (data) => Reader.create(data);
 
-exports.update = async (id, data) => {
+const update = async (id, data) => {
   const reader = await Reader.findByPk(id);
   if (!reader) throw new Error('Reader not found');
   return reader.update(data);
 };
 
-exports.remove = async (id) => {
+const remove = async (id) => {
   const reader = await Reader.findByPk(id);
   if (!reader) throw new Error('Reader not found');
   return reader.destroy();
+};
+
+module.exports = {
+  getAll,
+  getById,
+  create,
+  update,
+  remove
 };

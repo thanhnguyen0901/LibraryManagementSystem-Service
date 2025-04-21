@@ -1,21 +1,30 @@
 // services/fine.service.js
-const db = require('../models');
-const Loan = db.Loan;
+const db = require('../database');
+const Loan = db.getTable('Loan');
+const sequelize = db.getInstance();
+const { Op, col } = require('sequelize');
 
-exports.getAllFines = async () => {
+const getAllFines = async () => {
   return Loan.findAll({
     where: {
       NgayTra: {
-        [db.Sequelize.Op.gt]: db.Sequelize.col('NgayMuon')
+        [Op.gt]: col('NgayMuon') // Ngày trả > ngày mượn => bị phạt
       }
     }
   });
 };
 
-exports.payFine = async (loanId, soTienThu) => {
+const payFine = async (loanId, soTienThu) => {
   const loan = await Loan.findByPk(loanId);
   if (!loan) throw new Error('Phiếu mượn không tồn tại');
-  // Giả lập ghi nhận đã thu tiền phạt - có thể thêm trường `DaThuPhat` sau này
+
+  // Giả lập ghi nhận đã thu tiền phạt (nếu có field TienPhatDaThu trong model/table)
   loan.TienPhatDaThu = soTienThu;
+
   return loan.save();
+};
+
+module.exports = {
+  getAllFines,
+  payFine
 };

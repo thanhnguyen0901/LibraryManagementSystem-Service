@@ -1,9 +1,16 @@
 // services/loanDetail.service.js
-const db = require('../models');
-const LoanDetail = db.LoanDetail;
+const db = require('../database');
+const LoanDetail = db.getTable('LoanDetail');
 
-exports.getAll = () => LoanDetail.findAll();
+const getAll = () => LoanDetail.findAll();
 
-exports.getByBookId = (bookId) => {
-  return LoanDetail.findAll({ where: { MaSach: bookId } });
+const getByBookId = (bookId) => {
+  return LoanDetail.findAll({
+    where: { MaSach: bookId }
+  });
+};
+
+module.exports = {
+  getAll,
+  getByBookId
 };
