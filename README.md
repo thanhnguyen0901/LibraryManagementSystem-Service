@@ -35,13 +35,48 @@ The system manages books, users (readers and librarians), loans, fines, and conf
 │       ├── account.model.js
 │       ├── book.model.js
 │       └── ...
+├── docker/
+│   ├── docker-compose.yml      # MariaDB container setup
+│   └── init.sql                # Used by Docker to init DB with tables and seed data
 ```
 
 ---
 
-## 🛠 Getting Started
+## 🐳 Run with Docker (MariaDB)
 
-### 1. Installation
+1. Navigate to the `docker` folder:
+
+```bash
+cd docker
+```
+
+2. Make sure you have Docker installed and run the command:
+
+```bash
+docker-compose up -d
+```
+
+3. This will:
+- Start a MariaDB instance on port `3306`
+- Initialize the schema and seed data from `init.sql`
+
+You can edit the file `docker-compose.yml` to change default user/password:
+
+```yaml
+environment:
+  MYSQL_ROOT_PASSWORD: root
+  MYSQL_DATABASE: quan_ly_thu_vien
+  MYSQL_USER: admin
+  MYSQL_PASSWORD: password!
+```
+
+Update your `.env` file accordingly.
+
+---
+
+## 🛠 Getting Started (Backend)
+
+### 1. Clone and Install
 
 ```bash
 git clone https://vietthanh090198@dev.azure.com/vietthanh090198/PTIT/_git/LibraryManagementSystem-Service
@@ -49,19 +84,23 @@ cd LibraryManagementSystem-Service
 npm install
 ```
 
-### 2. Configure Environment
+### 2. Environment Configuration
 
-Create a `.env` file with the following variables:
+Create a `.env` file:
 
 ```env
 PORT=3001
 DB_HOST=localhost
-DB_NAME=quanlythuvien
-DB_USER=root
-DB_PASSWORD=your_password
+DB_PORT=3306
+DB_NAME=quan_ly_thu_vien
+DB_USER=admin
+DB_PASSWORD=password!
+DB_DIALECT=mariadb
 ```
 
-### 3. Start the Application
+> ⚠️ These values must match those in your `docker-compose.yml`
+
+### 3. Start the Server
 
 ```bash
 npm start
@@ -69,30 +108,35 @@ npm start
 
 ---
 
-## 🧪 Build and Test
+## 🧪 API Testing
 
-This project doesn't use a build step. Just make sure Node.js (>=14) is installed.
-
-You can use [Postman](https://www.postman.com/) to test available API endpoints like:
+Use [Postman](https://www.postman.com/) to test endpoints like:
 
 - `POST /api/auth/login`
-- `GET /api/books`
+- `POST /api/auth/register`
+- `GET  /api/books`
 - `POST /api/loans`
-- etc.
+- `GET  /api/reports/summary`
+- `PUT  /api/auth/change-password`
 
-Unit tests can be added with Mocha, Jest or another testing library (optional, not included by default).
+---
+
+## 📦 Build and Test
+
+No build step required. Runtime: **Node.js >=14**  
+Tests can be added using **Jest**, **Mocha**, or your preferred test framework.
 
 ---
 
 ## 🤝 Contribute
 
-We welcome contributions! You can:
+We welcome contributions! Steps to contribute:
 
-- Fork this repository
-- Create your feature branch (`git checkout -b feature/new-feature`)
-- Commit your changes (`git commit -am 'Add new feature'`)
-- Push to the branch (`git push origin feature/new-feature`)
-- Open a Pull Request
+1. Fork this repo
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Commit your changes
+4. Push to your fork
+5. Open a pull request
 
 ---
 
@@ -101,6 +145,7 @@ We welcome contributions! You can:
 - [Sequelize ORM](https://sequelize.org/)
 - [Express.js](https://expressjs.com/)
 - [MariaDB](https://mariadb.com/kb/en/)
+- [Docker Compose](https://docs.docker.com/compose/)
 
 ---
 
