@@ -18,7 +18,7 @@ const createAccount = (sequelize) => {
       allowNull: false
     }
   }, {
-    tableName: 'taikhoan',
+    tableName: 'TaiKhoan',
     timestamps: false
   });
 };
