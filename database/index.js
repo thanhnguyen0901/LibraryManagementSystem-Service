@@ -20,7 +20,7 @@ const connectDB = async () => {
     {
       host: config.database.host,
       port: config.database.port || 3306,
-      dialect: "mariadb",
+      dialect: "mysql",
       logging: false,
       retry: {
         match: [/Deadlock/i, Sequelize.ConnectionError],
