@@ -3,7 +3,7 @@ version: '3.8'
 services:
   mariadb:
     image: mariadb:10.6
-    container_name: library-mariadb
+    container_name: library_db_dev
     restart: always
     ports:
       - "3306:3306"  

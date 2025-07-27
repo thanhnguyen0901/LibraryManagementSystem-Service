@@ -27,3 +27,12 @@ exports.changePassword = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+exports.getAll = async (req, res) => {
+  try {
+    const users = await authService.getAllAccounts();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

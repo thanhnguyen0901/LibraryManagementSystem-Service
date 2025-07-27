@@ -14,7 +14,7 @@ const createBook = async (bookData) => {
 };
 
 const updateBook = async (id, bookData) => {
-  const book = await Bdb.getTable("Book").findByPk(id);
+  const book = await db.getTable("Book").findByPk(id);
   if (!book) throw new Error("Book not found");
   return book.update(bookData);
 };

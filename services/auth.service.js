@@ -29,9 +29,18 @@ const changePassword = async ({ MaTaiKhoan, oldPassword, newPassword }) => {
   return account.save();
 };
 
+const getAllAccounts = async () => {
+  return await db.getTable("Account").findAll({
+    attributes: ["MaTaiKhoan", "TenDangNhap"], 
+    order: [["MaTaiKhoan", "ASC"]]
+  });
+};
+
+
 module.exports = {
   register,
   login,
   changePassword,
+  getAllAccounts
 };
 

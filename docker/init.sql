@@ -74,10 +74,10 @@ CREATE TABLE ThamSo (
 );
 
 
--- Dữ liệu mẫu
+-- Dữ liệu mẫu // Password: P@ssword
 INSERT INTO TaiKhoan (TenDangNhap, MatKhau) VALUES
-('thuthu01', '$2b$10$LG5rM2x6Vo0Ss5BrXhRA5OLit.6.uCyEKf/RpDpaRGo/UgdsT597.'),
-('docgia01', '$2b$10$LG5rM2x6Vo0Ss5BrXhRA5OLit.6.uCyEKf/RpDpaRGo/UgdsT597.');
+('thuthu01', '$2b$10$kDLK7uEyhhpd1h9buyUDnuTBTgWc4o7xNMuFA45cq4G/ujSUfe8ne'),
+('docgia01', '$2b$10$kDLK7uEyhhpd1h9buyUDnuTBTgWc4o7xNMuFA45cq4G/ujSUfe8ne');
 
 INSERT INTO DocGia (TenDG, LoaiDG, NgaySinhDG, EmailDG, NgLapThe, MaTaiKhoan) VALUES
 ('Nguyễn Văn A', 'X', '1990-05-20', 'vana@example.com', 'Thủ Thư 1', 2);

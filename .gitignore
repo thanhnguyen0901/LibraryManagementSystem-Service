@@ -16,3 +16,6 @@ Thumbs.db
 
 # Sequelize auto-generated (nếu có)
 models/*.js.map
+
+
+.env.local
