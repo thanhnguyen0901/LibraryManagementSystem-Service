@@ -27,3 +27,13 @@ exports.getDebtReaders = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getMonthlyReport = async (req, res) => {
+  try {
+    const { month, year } = req.query;
+    const result = await reportService.getMonthlyReport(Number(month), Number(year));
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

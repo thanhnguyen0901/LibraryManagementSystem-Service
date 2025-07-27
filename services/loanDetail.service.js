@@ -11,7 +11,29 @@ const getByBookId = async (bookId) => {
   });
 };
 
+const recordLoan = async (MaSach) => {
+  const today = new Date().toISOString().split('T')[0];
+  const loanDetailTable = db.getTable('LoanDetail');
+
+  const existing = await loanDetailTable.findOne({
+    where: { MaSach, NgayThang: today }
+  });
+
+  if (existing) {
+    existing.SoLanMuon += 1;
+    return await existing.save();
+  }
+
+  return await loanDetailTable.create({
+    MaSach,
+    NgayThang: today,
+    SoLanMuon: 1
+  });
+};
+
+
 module.exports = {
   getAll,
-  getByBookId
+  getByBookId,
+  recordLoan
 };

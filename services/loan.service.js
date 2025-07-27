@@ -10,7 +10,45 @@ const getById = async (id) => {
 };
 
 const create = async (data) => {
-  return await db.getTable('Loan').create(data);
+  const { MaDG, MaSach } = data;
+  const reader = await db.getTable('Reader').findByPk(MaDG);
+  if (!reader) throw new Error('Độc giả không tồn tại');
+
+  const config = await db.getTable('Config').findOne();
+  const maxBooks = config?.SoSachMuonToiDa || 3;
+
+  const currentLoans = await db.getTable('Loan').count({
+    where: {
+      MaDG,
+      NgayTra: null
+    }
+  });
+
+  if (currentLoans >= maxBooks) {
+    throw new Error(`Độc giả đã mượn tối đa ${maxBooks} sách`);
+  }
+
+  const newLoan = await db.getTable('Loan').create(data);
+
+  // Update LoanDetail
+  const today = new Date().toISOString().split('T')[0];
+  const loanDetailTable = db.getTable('LoanDetail');
+  const existing = await loanDetailTable.findOne({
+    where: { MaSach, NgayThang: today }
+  });
+
+  if (existing) {
+    existing.SoLanMuon += 1;
+    await existing.save();
+  } else {
+    await loanDetailTable.create({
+      MaSach,
+      NgayThang: today,
+      SoLanMuon: 1
+    });
+  }
+
+  return newLoan;
 };
 
 const update = async (id, data) => {

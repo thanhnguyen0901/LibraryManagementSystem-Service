@@ -2,11 +2,37 @@
 const db = require("../database");
 const bcrypt = require("bcrypt");
 
-const register = async ({ TenDangNhap, MatKhau }) => {
+// Helper: validate tuổi hợp lệ
+const isValidAge = (birthDate, minAge, maxAge) => {
+  const today = new Date();
+  const dob = new Date(birthDate);
+  const age = today.getFullYear() - dob.getFullYear();
+  return age >= minAge && age <= maxAge;
+};
+
+const register = async ({ TenDangNhap, MatKhau, ReaderInfo }) => {
   const existing = await db.getTable("Account").findOne({ where: { TenDangNhap } });
   if (existing) throw new Error("Tên đăng nhập đã tồn tại");
+
+  const { NgaySinhDG } = ReaderInfo;
+  const config = await db.getTable("Config").findOne();
+  const minAge = config?.SoTuoiDG || 18;
+  const maxAge = 25;
+
+  if (!isValidAge(NgaySinhDG, minAge, maxAge)) {
+    throw new Error(`Tuổi độc giả không nằm trong khoảng ${minAge}–${maxAge}`);
+  }
+
   const hashedPassword = await bcrypt.hash(MatKhau, 10);
-  return await db.getTable("Account").create({ TenDangNhap, MatKhau: hashedPassword });
+  const account = await db.getTable("Account").create({ TenDangNhap, MatKhau: hashedPassword });
+
+  await db.getTable("Reader").create({
+    ...ReaderInfo,
+    MaTaiKhoan: account.MaTaiKhoan,
+    NgLapThe: new Date().toISOString().split("T")[0],
+  });
+
+  return account;
 };
 
 const login = async ({ TenDangNhap, MatKhau }) => {

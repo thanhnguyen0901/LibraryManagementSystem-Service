@@ -10,6 +10,14 @@ const getBookById = async (id) => {
 };
 
 const createBook = async (bookData) => {
+  const currentYear = new Date().getFullYear();
+  const config = await db.getTable("Config").findOne();
+  const maxYears = config?.ThoiGianXB || 8;
+
+  if (currentYear - bookData.NamXB > maxYears) {
+    throw new Error(`Chỉ tiếp nhận sách xuất bản trong vòng ${maxYears} năm`);
+  }
+
   return await db.getTable("Book").create(bookData);
 };
 
