@@ -8,7 +8,11 @@ const createConfig = (sequelize) => {
     TienPhat: DataTypes.DECIMAL(10, 2)
   }, {
     tableName: 'ThamSo',
-    timestamps: false
+    timestamps: false,
+    freezeTableName: true,
+    defaultScope: {
+      attributes: { exclude: ['id'] }
+    }
   });
 };
 
